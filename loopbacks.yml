@@ -1,0 +1,38 @@
+---
+- name: Configure loopback interfaces
+  hosts: router2
+  connection: network_cli
+  gather_facts: no
+  vars:
+    ansible_user: vyos
+
+  tasks:
+
+    - name: get netbox json
+      uri:
+        url: http://192.168.56.103/api/ipam/ip-addresses/?device_id={{ device_id }}&role=10
+        method: GET
+        headers:
+          content-type: 'aplication/json'
+          Authorization: 'Token 40331d916c88aa9d5dfd1be41d1c8833e073594b'
+        body_format: json
+      register: host_info
+      delegate_to: localhost
+    
+    # - debug:
+    #     var: host_info.json.results
+    
+    
+    # - name: Configure loopback interface
+    #   vyos_config:
+    #     save: yes
+    #     lines:
+    #       - set interface dummy {{ item.interface.name }} address {{ item.address }}         
+    #   with_items: "{{ host_info.json.results }}"
+
+    # - name: Configure loopback interface
+    #   vyos_config:
+    #     save: True
+    #     lines:
+    #       - set interfaces dummy dum1 address '10.0.1.1/24'
+      
