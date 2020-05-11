@@ -1,0 +1,14 @@
+plugin: netbox.netbox.nb_inventory
+
+validate_certs: False
+config_context: True
+group_by:
+  - device_roles
+  - sites
+  - tags
+  - platforms
+  
+compose:
+  device_id: id
+  ansible_network_os: device_type.model
+  ansible_connection: "network_cli"
