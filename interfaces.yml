@@ -1,6 +1,6 @@
 ---
 - name: Configure network interfaces
-  hosts: router2
+  hosts: all
   connection: network_cli
   gather_facts: no
   vars:
