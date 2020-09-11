@@ -7,7 +7,7 @@ Vagrant.configure("2") do |config|
     netbox.vm.box = "netbox"
 
     netbox.ssh.username = "root"
-    netbox.ssh.password = "nacho05"
+    netbox.ssh.password = "root"
   
 
     netbox.vm.synced_folder ".", "/vagrant", disabled: true
@@ -20,7 +20,7 @@ Vagrant.configure("2") do |config|
     tower.vm.box = "tower"
 
     tower.ssh.username = "root"
-    tower.ssh.password = "nacho05"
+    tower.ssh.password = "root"
 
     tower.vm.synced_folder ".", "/vagrant", disabled: true
     
@@ -30,7 +30,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define "vyos" do |vyos|
-    vyos.vm.box = "vyos_clean"
+    vyos.vm.box = "vyos"
 
     vyos.ssh.username = "vyos"
     vyos.ssh.password = "vyos"
