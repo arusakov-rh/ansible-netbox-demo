@@ -2,3 +2,5 @@
 *.code-workspace
 netbox_inventory.yml
 ansible.cfg
+*.box
+.vagrant
