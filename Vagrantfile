@@ -26,8 +26,14 @@ Vagrant.configure("2") do |config|
     
     tower.vm.network "private_network", ip: "192.168.56.107"
 
-    tower.vm.network "forwarded_port", guest: 443, host: 8443, auto_correct: true
+    tower.vm.network "forwarded_port", guest: 443, host: 8443, auto_correct: true    
+
+    tower.vm.provision :ansible do |ansible|
+      ansible.playbook = "provision.yml"
+    end
   end
+
+  
 
   config.vm.define "vyos" do |vyos|
     vyos.vm.box = "vyos"

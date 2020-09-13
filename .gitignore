@@ -4,3 +4,5 @@ netbox_inventory.yml
 ansible.cfg
 *.box
 .vagrant
+customization/
+.DS_Store

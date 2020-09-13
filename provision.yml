@@ -1,0 +1,46 @@
+---
+- hosts: all
+  gather_facts: no
+  become: no
+
+  vars:
+    license_file: "{{playbook_dir}}/customization/license.txt"
+    git_url: "{{playbook_dir}}/customization/git_url"
+
+  tasks:
+  - name: Check if there's a custom git_repo
+    stat: path="{{playbook_dir}}/customization/git_url"     
+    register: custom_git
+    delegate_to: localhost
+
+  - name: Change SCM URL
+    uri:
+      url: https://192.168.56.107/api/v2/projects/35/
+      method: PATCH
+      user: admin
+      password: admin
+      body: 
+        scm_url: "{{lookup('file', '{{git_url}}')}}"
+      body_format: json
+      validate_certs: false
+      force_basic_auth: true
+    when: custom_git.stat.exists
+    delegate_to: localhost
+
+  - name: Check if there's a new license
+    stat: path="{{license_file}}"
+    register: new_license
+    delegate_to: localhost
+
+  - name: Post license key
+    uri:
+      url: https://192.168.56.107/api/v2/config/
+      method: POST
+      user: admin
+      password: admin
+      body: "{{lookup('file', '{{license_file}}')}}"
+      body_format: json
+      validate_certs: false
+      force_basic_auth: true
+    when: new_license.stat.exists
+    delegate_to: localhost
